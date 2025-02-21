@@ -1,262 +1,281 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Valentine's Day</title>
-  <style>
-    /* Reset CSS */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surat Romantis</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            overflow: hidden;
+        }
 
-    body {
-      font-family: 'Pacifico', cursive;
-      background: linear-gradient(45deg, #ff1493, #ff69b4, #ff85c1, #ffb6c1);
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-      text-align: center;
-      position: relative;
-      animation: gradientAnimation 10s ease infinite;
-      background-size: 200% 200%;
-    }
+        /* Container amplop */
+        .envelope-container {
+            position: relative;
+            width: 90%;
+            max-width: 300px;
+            height: auto;
+            cursor: pointer;
+            margin-top: 20px; /* Jarak vertikal */
+        }
 
-    @keyframes gradientAnimation {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+        /* Amplop tertutup */
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background-color: #f4d9d9;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s ease;
+            transform-origin: top;
+            z-index: 2;
+        }
 
-    .bubbles {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      z-index: 0;
-    }
+        /* Bagian atas amplop */
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 50% solid transparent;
+            border-right: 50% solid transparent;
+            border-bottom: 50px solid #f4d9d9;
+        }
 
-    .bubbles span {
-      position: absolute;
-      display: block;
-      width: 20px;
-      height: 20px;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      animation: float linear infinite;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    }
+        /* Efek membuka amplop */
+        .envelope.open {
+            transform: rotateX(180deg);
+            z-index: 1;
+            margin-top: 20px; /* Jarak vertikal saat amplop terbuka */
+        }
 
-    @keyframes float {
-      0% { transform: translateY(100vh) scale(0); opacity: 0; }
-      50% { opacity: 1; }
-      100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-    }
+        /* Surat di dalam amplop */
+        .letter {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 250px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+            display: none;
+            z-index: 0;
+            animation: slideUp 0.5s ease;
+            overflow: hidden; /* Memastikan konten surat tidak keluar dari area */
+        }
 
-    .container {
-      position: relative;
-      z-index: 1;
-      width: 90%; /* Lebar container lebih kecil */
-      max-width: 500px; /* Lebar maksimum container */
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 15px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-    }
+        /* Konten surat */
+        .letter-content {
+            position: relative;
+            z-index: 1;
+        }
 
-    .step {
-      display: none;
-      animation: fadeIn 1s ease-in-out;
-    }
+        /* Animasi surat muncul */
+        @keyframes slideUp {
+            from {
+                transform: translateX(-50%) translateY(100%);
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+            }
+        }
 
-    .step.active {
-      display: block;
-    }
+        /* Logo hati di amplop */
+        .heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background-color: #ff6b6b;
+            clip-path: polygon(
+                50% 15%,
+                70% 0%,
+                85% 15%,
+                100% 35%,
+                85% 60%,
+                70% 75%,
+                50% 100%,
+                30% 75%,
+                15% 60%,
+                0% 35%,
+                15% 15%,
+                30% 0%
+            );
+            animation: float 3s ease-in-out infinite;
+        }
 
-    h1 {
-      font-size: 1.8rem; /* Ukuran font judul lebih kecil */
-      margin-bottom: 15px;
-      color: #ff4d4d; /* Warna judul */
-      font-weight: normal; /* Font weight lebih ringan */
-    }
+        /* Tulisan "Klik ya Bebby" */
+        .text {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 18px;
+            color: #ff6b6b;
+            font-weight: bold;
+            text-align: center;
+        }
 
-    p {
-      font-size: 1rem; /* Ukuran font paragraf lebih kecil */
-      line-height: 1.6; /* Jarak antar baris lebih rapi */
-      color: #555; /* Warna teks lebih gelap */
-      margin-bottom: 15px;
-      font-family: 'Arial', sans-serif; /* Font lebih modern */
-      font-weight: 300; /* Font weight lebih ringan */
-    }
+        /* Animasi hati */
+        @keyframes float {
+            0%, 100% {
+                transform: translate(-50%, -50%) translateY(0);
+            }
+            50% {
+                transform: translate(-50%, -50%) translateY(-10px);
+            }
+        }
 
-    .heart {
-      width: 50px;
-      height: 50px;
-      background: #ff4d4d;
-      position: relative;
-      cursor: pointer;
-      transform: rotate(45deg);
-      margin: 20px auto; /* Jarak lebih kecil */
-      box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
-      animation: beat 1.5s infinite;
-    }
+        /* Background animasi */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
 
-    .heart::before,
-    .heart::after {
-      content: '';
-      width: 50px;
-      height: 50px;
-      background: #ff4d4d;
-      border-radius: 50%;
-      position: absolute;
-    }
+        .background span {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: animate 10s linear infinite;
+            bottom: -150px;
+        }
 
-    .heart::before {
-      top: -25px;
-      left: 0;
-    }
+        @keyframes animate {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+            }
+        }
 
-    .heart::after {
-      top: 0;
-      left: -25px;
-    }
+        /* Responsif untuk mobile */
+        @media (max-width: 480px) {
+            .envelope-container {
+                width: 100%;
+                max-width: 250px;
+            }
 
-    @keyframes beat {
-      0%, 100% { transform: rotate(45deg) scale(1); }
-      50% { transform: rotate(45deg) scale(1.1); }
-    }
+            .envelope {
+                height: 180px;
+            }
 
-    .button {
-      background: #ff4d4d;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 0.9rem; /* Ukuran font tombol lebih kecil */
-      margin-top: 15px; /* Jarak lebih kecil */
-      transition: background 0.3s ease, transform 0.3s ease;
-      font-family: 'Arial', sans-serif; /* Font lebih modern */
-    }
+            .envelope::before {
+                border-bottom: 40px solid #f4d9d9;
+                top: -40px;
+            }
 
-    .button:hover {
-      background: #ff1a1a;
-      transform: scale(1.05);
-    }
+            .letter {
+                width: 85%;
+                max-width: 220px;
+                padding: 15px;
+            }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-  </style>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+            .text {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="bubbles">
-    <!-- Gelembung akan di-generate oleh JavaScript -->
-  </div>
 
-  <div class="container">
-    <!-- Tahap 1: Awal -->
-    <div class="step active" id="step1">
-      <h1>Halo Eva!! Kamu Adalah Orang Terbaik Di Hidup Iooo!</h1>
-      <p>Coba Deh Tap Logo Hatinya Untuk Melihat Beberapa Alasanku Memilihmu.</p>
-      <div class="heart" onclick="nextStep(2)"></div>
+    <!-- Background animasi -->
+    <div class="background">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
 
-    <!-- Tahap 2: Pesan Pertama -->
-    <div class="step" id="step2">
-      <h1>Alasan Pertama</h1>
-      <p>Kamu orang yang berasal dari keluarga sederhana dan penuh perjuangan, aku menaruh harapan banyak padamu.</p>
-      <p>Aku harap nantinya sesulit apapun hidup yang kita jalanin kamu selalu ada di samping aku buat ngerti semua apa yang aku rasakan, buat ngerti semua apa yang aku alami, mungkin aku lebih banyak ingin dimengerti tapi aku juga berusaha untuk lebih banyak memahamimu, aku akan mengulurkan tanganku di setiap kesulitanmu, jadi jangan sungkan untuk memberikan tanganmu juga ke io ya karena adakalanya io juga butuh bantuanmu beb, kita saling, kita ngerti, kita sayang terhadap sesama.</p>
-      <button class="button" onclick="nextStep(3)">Lanjut</button>
+    <!-- Container amplop -->
+    <div class="envelope-container" onclick="toggleEnvelope()">
+        <!-- Amplop tertutup -->
+        <div class="envelope" id="envelope">
+            <div class="heart"></div>
+            <div class="text">Klik ya Bebby</div>
+        </div>
+
+        <!-- Surat di dalam amplop -->
+        <div class="letter" id="letter">
+            <div class="letter-content">
+                <p>Sayangku,</p>
+                <p>
+                    Setiap kali aku memikirkanmu, hatiku dipenuhi dengan kebahagiaan yang tak terhingga. 
+                    Aku bersyukur bisa mengenalmu dan memiliki dirimu dalam hidupku. 
+                    Terima kasih telah menjadi cahaya dalam hariku.
+                </p>
+                <p>Dengan cinta,<br>Dirimu</p>
+            </div>
+        </div>
     </div>
 
-    <!-- Tahap 3: Pesan Kedua -->
-    <div class="step" id="step3">
-      <h1>Alasan Kedua</h1>
-      <p>Sejak pertama kali kita bertemu,</p>
-      <p>Hidupku terasa lebih berwarna, lebih ada senyum, lebih semangat untuk bekerja, dan menjalani hidup yang membosankan ini menjadi sedikit lebih menantang dan punya cerita.</p>
-      <button class="button" onclick="nextStep(4)">Lanjut</button>
-    </div>
+    <!-- Audio untuk musik -->
+    <audio id="background-music" loop>
+        <source src="audio-file.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
 
-    <!-- Tahap 4: Pesan Ketiga -->
-    <div class="step" id="step4">
-      <h1>Alasan Ketiga</h1>
-      <p>Setiap senyummu,</p>
-      <p>Membuat hari-hariku lebih cerah, wajahmu di bangun tidurku memberiku rasa syukur yang tak ada habisnya, keikhlasanmu dalam menjalani ini bersamaku, wajah tidurmu yang jujur itu bikin io selalu berpikir untuk terus menjagamu dalam kondisi apapun :")</p>
-      <button class="button" onclick="nextStep(5)">Lanjut</button>
-    </div>
+    <script>
+        const envelope = document.getElementById('envelope');
+        const letter = document.getElementById('letter');
+        const music = document.getElementById('background-music');
 
-    <!-- Tahap 5: Pesan Keempat -->
-    <div class="step" id="step5">
-      <h1>Alasan Keempat</h1>
-      <p>Aku bersyukur bisa mengenalmu,</p>
-      <p>io selalu berpikir cara kita untuk menang dalam hubungan ini untuk terus bisa hidup adalah kesabaran dan keikhlasan, penuh cinta dan kasih agar hidup kita selalu dipenuhi dalam keindahan yang tak ada batasnya, ini bukan tentang siapa yang terbaik, siapa yang paling ganteng atau siapa yang paling cantik, tapi ini tentang siapa yang paling sabar dan ikhlas.</p>
-      <button class="button" onclick="nextStep(6)">Lanjut</button>
-    </div>
-
-    <!-- Tahap 6: Pesan Terakhir -->
-    <div class="step" id="step6">
-      <h1>Pesan Terakhir</h1>
-      <p>Aku harap bisa selalu melihat tingkahmu yang lucu, tingkahmu yang lugu, latahmu yang selalu kutertawakan, tulusmu yang aku rindukan, kehebatanmu yang selalu kubanggakan.</p>
-      <p>Aku harap juga kita bisa bersama untuk selamanya, hingga maut memisahkanpun aku masih ingin selalu bersamamu. Mencintamu ugal-ugalan. 💖</p>
-      <button class="button" onclick="nextStep(1)">Kembali ke Awal</button>
-    </div>
-  </div>
-
-  <!-- Audio lokal -->
-  <audio id="myAudio" loop>
-    <source src="audio-file.mp3" type="audio/mpeg">
-    Browser Anda tidak mendukung pemutaran audio.
-  </audio>
-
-  <script>
-    let currentStep = 1;
-
-    function nextStep(step) {
-      document.getElementById(`step${currentStep}`).classList.remove('active');
-      document.getElementById(`step${step}`).classList.add('active');
-      currentStep = step;
-    }
-
-    // Generate gelembung kecil
-    const bubblesContainer = document.querySelector('.bubbles');
-    const bubbleCount = 30;
-
-    for (let i = 0; i < bubbleCount; i++) {
-      const bubble = document.createElement('span');
-      bubble.style.left = `${Math.random() * 100}%`;
-      bubble.style.animationDuration = `${Math.random() * 5 + 5}s`;
-      bubble.style.animationDelay = `${Math.random() * 2}s`;
-      bubble.style.width = `${Math.random() * 20 + 10}px`;
-      bubble.style.height = bubble.style.width;
-      bubblesContainer.appendChild(bubble);
-    }
-
-    // Memutar audio saat hati diklik
-    const audio = document.getElementById('myAudio');
-    document.querySelector('.heart').addEventListener('click', function() {
-      audio.play();
-    });
-
-    // Memutar audio saat tombol "Lanjut" diklik
-    document.querySelectorAll('.button').forEach(button => {
-      button.addEventListener('click', function() {
-        if (audio.paused) {
-          audio.play();
+        function toggleEnvelope() {
+            if (envelope.classList.contains('open')) {
+                // Tutup amplop
+                envelope.classList.remove('open');
+                letter.style.display = 'none';
+                music.pause(); // Hentikan musik
+            } else {
+                // Buka amplop
+                envelope.classList.add('open');
+                setTimeout(() => {
+                    letter.style.display = 'block';
+                }, 500); // Sesuaikan dengan durasi animasi amplop
+                music.play(); // Mainkan musik
+            }
         }
-      });
-    });
-  </script>
+
+        // Hentikan musik saat browser ditutup (untuk mobile)
+        window.addEventListener('beforeunload', () => {
+            music.pause();
+        });
+    </script>
+
 </body>
 </html>
